@@ -1078,6 +1078,10 @@ class Sheet {
       };
     }
 
+    // Prevent that real numbers are saved as strings to the excel. This would prevent further calculations otherwise because math operations on strings are not possible of course.
+    final parsedNumber = num.tryParse(value.toString().trim());
+    if (parsedNumber != null) value = parsedNumber;
+
     if (value is String) {
       final sharedString = _excel._sharedStrings.addFromString(value);
       _sheetData[rowIndex]![columnIndex]!._value = sharedString;
